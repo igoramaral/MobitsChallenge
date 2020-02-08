@@ -58,9 +58,11 @@ public class TransactionService {
                         case "Withdraw":
                             //Standard costumers cannot make withdraw if the value is greater than their current balance
                             //VIP costumers have no withdraw limits but negative balance will generate interest fees
-                            
+                      
                             switch(accTo.getAccDesc()){
-                                case "Stardard":
+                                case "Standard":
+                                    System.out.println("Withdraw on Standard Account");
+                                    System.out.println("Value: " + transaction.getValue());
                                     if(transaction.getValue() > accTo.getBalance()){
                                         return 0;
                                     }

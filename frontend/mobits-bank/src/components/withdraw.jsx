@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import TransactionDataService from "../services/TransactionDataService";
 
-class Deposit extends Component {
-  state = { redirect: false };
-
-  componentDidMount() {
-    console.log(this.props);
-  }
+class Withdraw extends Component {
+  state = {};
 
   validate = values => {
     const errors = {};
@@ -15,13 +11,18 @@ class Deposit extends Component {
       errors.value = "Required";
     } else if (values.value < 0) {
       errors.value = "Must be positive";
+    } else if (
+      values.value > this.props.account.balance &&
+      this.props.account.type === "Standard"
+    ) {
+      errors.value = "Insuficient funds!";
     }
-
     return errors;
   };
 
   render() {
     const { account } = this.props;
+    console.log(account);
     let acc = account.account;
     acc = parseInt(acc);
 
@@ -29,20 +30,28 @@ class Deposit extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm">
-            <h3>Deposit</h3>
-            <h5>Please insert desired amount to deposit</h5>
+            <h3>Withdraw</h3>
+            <h5>
+              Your current balance is{" "}
+              <p
+                className={account.balance < 0 ? "text-danger" : "text-success"}
+              >
+                R${account.balance}
+              </p>
+            </h5>
+            <h5>Please insert desired amount to Withdraw</h5>
             <Formik
               initialValues={{ value: 0, accNum: 0 }}
               validate={this.validate}
               onSubmit={(values, actions) => {
-                console.log(values.accNum);
-                //actions.setSubmitting(false);
-                //to, from, value, type
+                // console.log(values);
+                // actions.setSubmitting(false);
+                //to, from, value, type;
                 TransactionDataService.makeTransaction(
                   values.accNum,
                   values.accNum,
                   values.value,
-                  "Deposit"
+                  "Withdraw"
                 ).then(response => {
                   console.log("Transaction Done!");
                 });
@@ -84,7 +93,7 @@ class Deposit extends Component {
                       props.setFieldValue("accNum", acc);
                     }}
                   >
-                    Deposit
+                    Withdraw
                   </button>
                 </form>
               )}
@@ -100,4 +109,4 @@ class Deposit extends Component {
   }
 }
 
-export default Deposit;
+export default Withdraw;

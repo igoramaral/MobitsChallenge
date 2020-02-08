@@ -16,6 +16,13 @@ class Account extends Component {
         <a href="/deposit" className="btn btn-primary">
           Deposit
         </a>
+        <br></br>
+        <a href="/withdraw" className="btn btn-primary">
+          Withdraw
+        </a>
+        <a href="/transfer" className="btn btn-primary">
+          Transfer
+        </a>
         {account.type === "VIP" ? (
           <button className="btn-primary">Manager Appointment</button>
         ) : null}
