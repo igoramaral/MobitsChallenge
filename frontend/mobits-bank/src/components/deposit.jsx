@@ -1,37 +1,98 @@
 import React, { Component } from "react";
+import { Formik } from "formik";
+import TransactionDataService from "../services/TransactionDataService";
 
 class Deposit extends Component {
   state = {};
+
+  componentDidMount() {
+    console.log(this.props);
+  }
+
+  validate = values => {
+    const errors = {};
+    if (!values.value) {
+      errors.value = "Required";
+    } else if (values.value < 0) {
+      errors.value = "Must be positive";
+    }
+
+    return errors;
+  };
+
   render() {
+    const { account } = this.props;
+    let acc = account.account;
+    acc = parseInt(acc);
+
     return (
-      <div>
-        <a
-          className="btn btn-primary"
-          data-toggle="collapse"
-          href="#collapseExample"
-          role="button"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
-          Deposit
-        </a>
-        <p>Enter value to deposit:</p>
-        <div className="collapse" id="collapseExample">
-          <div className="card card-body">
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text" id="rs-symbol">
-                  R$
-                </span>
-              </div>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Value"
-                aria-label="value"
-                aria-describedby="rs-simbol"
-              />
-            </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm">
+            <h3>Deposit</h3>
+            <h5>Please insert desired amount to deposit</h5>
+            <Formik
+              initialValues={{ value: 0, accNum: 0 }}
+              validate={this.validate}
+              onSubmit={(values, actions) => {
+                console.log(values.accNum);
+                //actions.setSubmitting(false);
+                //to, from, value, type
+                TransactionDataService.makeTransaction(
+                  values.accNum,
+                  values.accNum,
+                  values.value,
+                  "Deposit"
+                ).then(response => {
+                  console.log("Transaction Done!");
+                });
+              }}
+            >
+              {props => (
+                <form onSubmit={props.handleSubmit}>
+                  <div className="input-group mb-2">
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">R$</div>
+                    </div>
+                    <input
+                      id="value"
+                      name="value"
+                      type="number"
+                      step="0.01"
+                      className="form-control"
+                      placeholder="0.00"
+                      onChange={props.handleChange}
+                    />
+                    <input
+                      id="accNum"
+                      name="accNum"
+                      type="hidden"
+                      className="form-control"
+                      onChange={props.handleChange}
+                      value={account.accNumber}
+                    />
+                  </div>
+                  {props.touched.value && props.errors.value ? (
+                    <div className="alert alert-warning">
+                      {props.errors.value}
+                    </div>
+                  ) : null}
+                  <button
+                    type="submit"
+                    className="btn btn-success mb-2"
+                    onClick={() => {
+                      props.setFieldValue("accNum", acc);
+                    }}
+                  >
+                    Deposit
+                  </button>
+                </form>
+              )}
+            </Formik>
+
+            <a href="/" className="btn btn-outline-primary">
+              Return to main menu
+            </a>
           </div>
         </div>
       </div>

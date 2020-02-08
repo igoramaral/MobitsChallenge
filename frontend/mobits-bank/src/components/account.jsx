@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
 class Account extends Component {
-  state = {};
-
   render() {
     const { account } = this.props;
     return (
@@ -15,8 +13,10 @@ class Account extends Component {
           </p>
         </h4>
         <h5>Choose your desired option:</h5>
-
-        {account.accDesc === "VIP" ? (
+        <a href="/deposit" className="btn btn-primary">
+          Deposit
+        </a>
+        {account.type === "VIP" ? (
           <button className="btn-primary">Manager Appointment</button>
         ) : null}
       </div>
