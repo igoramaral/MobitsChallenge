@@ -6,6 +6,7 @@ import AccountDataService from "./services/AccountDataService";
 import Deposit from "./components/deposit";
 import Withdraw from "./components/withdraw";
 import Transfer from "./components/transfer";
+import ManagerAppointment from "./components/manager";
 
 class App extends Component {
   state = {
@@ -13,7 +14,7 @@ class App extends Component {
   };
 
   refreshAccount = () => {
-    AccountDataService.retriveAccount("12345").then(response => {
+    AccountDataService.retriveAccount("98765").then(response => {
       this.setState({ account: response.data });
     });
   };
@@ -54,6 +55,14 @@ class App extends Component {
                 exact
                 path="/transfer"
                 render={props => <Transfer {...props} account={account} />}
+                account={account}
+              />
+              <Route
+                exact
+                path="/manager-appointment"
+                render={props => (
+                  <ManagerAppointment {...props} account={account} />
+                )}
                 account={account}
               />
             </Switch>

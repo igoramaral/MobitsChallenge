@@ -24,7 +24,9 @@ class Account extends Component {
           Transfer
         </a>
         {account.type === "VIP" ? (
-          <button className="btn-primary">Manager Appointment</button>
+          <a href="/manager-appointment" className="btn btn-primary">
+            Manager Appointment
+          </a>
         ) : null}
       </div>
     );
