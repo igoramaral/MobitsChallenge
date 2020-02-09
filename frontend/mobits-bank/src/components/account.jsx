@@ -103,7 +103,7 @@ class Account extends Component {
                 VIP costumers can schedule appointments with a manager. Click
                 here and schedule yours right now!
               </p>
-              <a href="appointment" className="btn btn-primary">
+              <a href="/manager-appointment" className="btn btn-primary">
                 Schedule Appointment
               </a>
             </div>
