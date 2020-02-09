@@ -12,7 +12,7 @@ import BankStatement from "./components/statement";
 
 class App extends Component {
   state = {
-    accNumber: "12345",
+    accNumber: "54321",
     account: {},
     statement: null
   };
