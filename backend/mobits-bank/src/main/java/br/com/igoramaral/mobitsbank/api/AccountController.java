@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RequestMapping("api/v1/account")
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:5000" })
+@CrossOrigin(origins = { "http://192.168.0.109:3000", "http://192.168.0.109:5000", "http://localhost:3000", "http://localhost:5000" })
 @RestController
 public class AccountController {
     private final AccountService accountService;

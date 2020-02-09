@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //const ACCOUNT = "12345";
-const API_URL = "http://localhost:8080/api/v1/transaction";
+const API_URL = "http://192.168.0.109:8080/api/v1/transaction";
 
 class TransactionDataService {
   makeTransaction(accTo, accFrom, value, type) {
@@ -14,6 +14,10 @@ class TransactionDataService {
       transDesc: type
     };
     return axios.post(`${API_URL}`, req);
+  }
+
+  getStatement(accNum) {
+    return axios.get(`${API_URL}/${accNum}`);
   }
 }
 

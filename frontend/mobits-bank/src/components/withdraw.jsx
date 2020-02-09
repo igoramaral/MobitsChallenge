@@ -22,7 +22,7 @@ class Withdraw extends Component {
 
   render() {
     const { account } = this.props;
-    console.log(account);
+    //console.log(account);
     let acc = account.account;
     acc = parseInt(acc);
 

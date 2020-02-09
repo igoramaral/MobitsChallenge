@@ -13,6 +13,9 @@ class Account extends Component {
           </p>
         </h4>
         <h5>Choose your desired option:</h5>
+        <a href="/statement" className="btn btn-primary">
+          Check Statement
+        </a>
         <a href="/deposit" className="btn btn-primary">
           Deposit
         </a>

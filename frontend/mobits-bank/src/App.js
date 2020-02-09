@@ -3,28 +3,40 @@ import NavBar from "./components/navbar";
 import Account from "./components/account";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AccountDataService from "./services/AccountDataService";
+import TransactionDataService from "./services/TransactionDataService";
 import Deposit from "./components/deposit";
 import Withdraw from "./components/withdraw";
 import Transfer from "./components/transfer";
 import ManagerAppointment from "./components/manager";
+import BankStatement from "./components/statement";
 
 class App extends Component {
   state = {
-    account: {}
+    accNumber: "12345",
+    account: {},
+    statement: null
   };
 
   refreshAccount = () => {
-    AccountDataService.retriveAccount("98765").then(response => {
+    AccountDataService.retriveAccount(this.state.accNumber).then(response => {
       this.setState({ account: response.data });
+    });
+  };
+
+  refreshStatement = () => {
+    TransactionDataService.getStatement(this.state.accNumber).then(response => {
+      this.setState({ statement: response.data });
     });
   };
 
   componentDidMount() {
     this.refreshAccount();
+    this.refreshStatement();
   }
 
   render() {
     let account = this.state.account;
+    let statement = this.state.statement;
 
     return (
       <React.Fragment>
@@ -41,8 +53,15 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/deposit"
-                render={props => <Deposit {...props} account={account} />}
+                path="/statement"
+                render={props => (
+                  <BankStatement
+                    {...props}
+                    statement={statement}
+                    account={account}
+                  />
+                )}
+                statement={statement}
                 account={account}
               />
               <Route
@@ -51,6 +70,13 @@ class App extends Component {
                 render={props => <Withdraw {...props} account={account} />}
                 account={account}
               />
+              <Route
+                exact
+                path="/deposit"
+                render={props => <Deposit {...props} account={account} />}
+                account={account}
+              />
+
               <Route
                 exact
                 path="/transfer"
