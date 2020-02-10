@@ -1,9 +1,24 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
+import AccountDataService from "../services/AccountDataService";
 import TransactionDataService from "../services/TransactionDataService";
 
 class Transfer extends Component {
-  state = {};
+  state = {
+    account: {}
+  };
+
+  refreshAccount = () => {
+    AccountDataService.retriveAccount(localStorage.getItem("account")).then(
+      response => {
+        this.setState({ account: response.data });
+      }
+    );
+  };
+
+  componentDidMount() {
+    this.refreshAccount();
+  }
 
   validate = values => {
     const errors = {};
@@ -20,8 +35,8 @@ class Transfer extends Component {
       //cannot make transfer to the same account
       errors.transaction = "Cannot make transfer to the same account";
     } else if (
-      values.value > this.props.account.balance + 8 &&
-      this.props.account.type === "Standard"
+      values.value > this.state.account.balance + 8 &&
+      this.state.account.type === "Standard"
     ) {
       errors.value = "Insuficient funds!";
     }
@@ -29,8 +44,7 @@ class Transfer extends Component {
   };
 
   render() {
-    const { account } = this.props;
-    console.log(account);
+    let account = this.state;
     let acc = account.account;
     acc = parseInt(acc);
 
@@ -129,7 +143,9 @@ class Transfer extends Component {
                 </form>
               )}
             </Formik>
-            {account.type === "Standard" ? (
+
+            {this.state.account.type &&
+            this.state.account.type === "Standard" ? (
               <div>
                 <p>You are a Standard costumer.</p>
                 <p>Your transfer limit is R$ 1000.00 per transaction.</p>
@@ -140,13 +156,13 @@ class Transfer extends Component {
                   transfer and the fee values.
                 </p>
               </div>
-            ) : (
+            ) : this.state.account.type === "VIP" ? (
               <div>
                 <p>You are a VIP costumer.</p>
                 <p>You have no transfer limit</p>
                 <p>Your transfer fee is 0,8% of transfer value.</p>
               </div>
-            )}
+            ) : null}
 
             <a href="/" className="btn btn-outline-primary">
               Return to main menu

@@ -1,14 +1,25 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
+import AccountDataService from "../services/AccountDataService";
 import TransactionDataService from "../services/TransactionDataService";
 
 class Deposit extends Component {
-  state = { redirect: false };
+  state = {
+    account: {}
+  };
+
+  refreshAccount = () => {
+    AccountDataService.retriveAccount(localStorage.getItem("account")).then(
+      response => {
+        this.setState({ account: response.data });
+        console.log(this.state.account);
+      }
+    );
+  };
 
   componentDidMount() {
-    console.log(this.props);
+    this.refreshAccount();
   }
-
   validate = values => {
     const errors = {};
     if (!values.value) {
@@ -21,8 +32,8 @@ class Deposit extends Component {
   };
 
   render() {
-    const { account } = this.props;
-    let acc = account.account;
+    let account = this.state.account;
+    let acc = this.state.account.account;
     acc = parseInt(acc);
 
     return (

@@ -1,9 +1,38 @@
 import React, { Component } from "react";
-//
+import AccountDataService from "../services/AccountDataService";
+import TransactionDataService from "../services/TransactionDataService";
 
 class BankStatement extends Component {
+  state = {
+    account: {},
+    statement: null
+  };
+
+  refreshAccount = () => {
+    AccountDataService.retriveAccount(localStorage.getItem("account")).then(
+      response => {
+        this.setState({ account: response.data });
+        console.log(this.state.account);
+      }
+    );
+  };
+
+  refreshStatement = () => {
+    TransactionDataService.getStatement(localStorage.getItem("account")).then(
+      response => {
+        this.setState({ statement: response.data });
+        console.log(this.state.statement);
+      }
+    );
+  };
+
+  componentDidMount() {
+    this.refreshStatement();
+    this.refreshAccount();
+  }
+
   render() {
-    const { statement } = this.props;
+    let statement = this.state.statement;
     return (
       <div className="container justify-content-center">
         <h3>Bank Statement</h3>
@@ -17,7 +46,7 @@ class BankStatement extends Component {
           </thead>
           {statement !== null ? (
             <tbody>
-              {this.props.statement.map(transaction => (
+              {statement.map(transaction => (
                 <tr key={transaction.id}>
                   <th scope="row">
                     {transaction.date.replace(/T/, " ").replace(/\..+/, "")}
@@ -51,12 +80,12 @@ class BankStatement extends Component {
                 <td>
                   <p
                     className={
-                      this.props.account.balance < 0
+                      this.state.account.balance < 0
                         ? "text-danger"
                         : "text-success"
                     }
                   >
-                    R${this.props.account.balance}
+                    R${this.state.account.balance}
                   </p>
                 </td>
               </tr>

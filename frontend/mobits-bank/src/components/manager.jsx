@@ -1,11 +1,32 @@
 import React, { Component } from "react";
 import TransactionDataService from "../services/TransactionDataService";
+import AccountDataService from "../services/AccountDataService";
 
 class ManagerAppointment extends Component {
-  state = {};
+  state = {
+    account: {
+      id: "",
+      name: "",
+      account: "",
+      password: "",
+      balance: "",
+      type: ""
+    }
+  };
+
+  refreshAccount = () => {
+    let acc = localStorage.getItem("account");
+    AccountDataService.retriveAccount(acc).then(response => {
+      this.setState({ account: response.data });
+    });
+  };
+
+  componentDidMount() {
+    this.refreshAccount();
+  }
 
   makeAppointment = () => {
-    let acc = this.props.account.account;
+    let acc = this.state.account.account;
     acc = parseInt(acc);
     //to, from, value, type;
     TransactionDataService.makeTransaction(
@@ -19,7 +40,7 @@ class ManagerAppointment extends Component {
   };
 
   render() {
-    const { account } = this.props;
+    const account = this.state.account;
     return (
       <div>
         <h3>Manager Appointment</h3>

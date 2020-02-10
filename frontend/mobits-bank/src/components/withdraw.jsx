@@ -1,9 +1,25 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
+import AccountDataService from "../services/AccountDataService";
 import TransactionDataService from "../services/TransactionDataService";
 
 class Withdraw extends Component {
-  state = {};
+  state = {
+    account: {}
+  };
+
+  refreshAccount = () => {
+    AccountDataService.retriveAccount(localStorage.getItem("account")).then(
+      response => {
+        this.setState({ account: response.data });
+        console.log(this.state.account);
+      }
+    );
+  };
+
+  componentDidMount() {
+    this.refreshAccount();
+  }
 
   validate = values => {
     const errors = {};
@@ -12,8 +28,8 @@ class Withdraw extends Component {
     } else if (values.value < 0) {
       errors.value = "Must be positive";
     } else if (
-      values.value > this.props.account.balance &&
-      this.props.account.type === "Standard"
+      values.value > this.state.account.balance &&
+      this.state.account.type === "Standard"
     ) {
       errors.value = "Insuficient funds!";
     }
@@ -21,7 +37,7 @@ class Withdraw extends Component {
   };
 
   render() {
-    const { account } = this.props;
+    let account = this.state.account;
     //console.log(account);
     let acc = account.account;
     acc = parseInt(acc);

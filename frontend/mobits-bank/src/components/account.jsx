@@ -4,10 +4,34 @@ import imgWithdraw from "../assets/withdraw.jpg";
 import imgDeposit from "../assets/deposit.jpg";
 import imgTransfer from "../assets/transfer.jpg";
 import imgAppointment from "../assets/appointment.jpg";
+import AccountDataService from "../services/AccountDataService";
 
 class Account extends Component {
+  state = {
+    account: {
+      id: "",
+      name: "",
+      account: "",
+      password: "",
+      balance: "",
+      type: ""
+    }
+  };
+
+  refreshAccount = () => {
+    let acc = localStorage.getItem("account");
+    AccountDataService.retriveAccount(acc).then(response => {
+      this.setState({ account: response.data });
+      console.log(this.state.account);
+    });
+  };
+
+  componentDidMount() {
+    this.refreshAccount();
+  }
+
   render() {
-    const { account } = this.props;
+    let account = this.state.account;
     return (
       <div>
         <h3>Welcome back, {account.name}!</h3>
