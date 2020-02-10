@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //const ACCOUNT = "12345";
-const API_URL = "http://192.168.0.109:8080/api/v1/transaction";
+const API_URL = "http://shimes.dlinkddns.com:8080/api/v1/transaction";
 const headers = {
   headers: { authorization: "Bearer " + localStorage.getItem("token") }
 };

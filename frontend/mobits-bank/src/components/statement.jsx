@@ -12,7 +12,6 @@ class BankStatement extends Component {
     AccountDataService.retriveAccount(localStorage.getItem("account")).then(
       response => {
         this.setState({ account: response.data });
-        console.log(this.state.account);
       }
     );
   };
@@ -21,7 +20,6 @@ class BankStatement extends Component {
     TransactionDataService.getStatement(localStorage.getItem("account")).then(
       response => {
         this.setState({ statement: response.data });
-        console.log(this.state.statement);
       }
     );
   };

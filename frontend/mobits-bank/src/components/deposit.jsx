@@ -12,7 +12,6 @@ class Deposit extends Component {
     AccountDataService.retriveAccount(localStorage.getItem("account")).then(
       response => {
         this.setState({ account: response.data });
-        console.log(this.state.account);
       }
     );
   };

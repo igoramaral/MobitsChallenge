@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.0.109:8080/authenticate";
+const API_URL = "http://shimes.dlinkddns.com:8080/authenticate";
 
 class AuthService {
   makeLogin = async (username, password) => {
@@ -9,15 +9,8 @@ class AuthService {
       password: password
     };
 
-    try {
-      let response = await axios.post(`${API_URL}`, req);
-      if (response.status === 200 && response.data.jwt) {
-        let jwt = response.data.jwt;
-        localStorage.setItem("token", jwt);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    console.log("Making call to athentication api...");
+    return axios.post(`${API_URL}`, req);
   };
 
   isAuthenticated() {

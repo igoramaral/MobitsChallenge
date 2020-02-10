@@ -9,8 +9,13 @@ import ManagerAppointment from "./components/manager";
 import BankStatement from "./components/statement";
 import Login from "./components/login";
 import PrivateRoute from "./components/privateRoute";
+import Footer from "./components/footer";
 
 class App extends Component {
+  state = {
+    logged: false
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -19,7 +24,12 @@ class App extends Component {
         <Router>
           <>
             <Switch>
-              <Route exact path="/login" render={props => <Login />} />
+              <Route
+                exact
+                path="/login"
+                component={Login}
+                history={this.props.history}
+              />
               <PrivateRoute exact path="/" component={Account} />
               <PrivateRoute exact path="/statement" component={BankStatement} />
               <PrivateRoute exact path="/withdraw" component={Withdraw} />
@@ -33,6 +43,7 @@ class App extends Component {
             </Switch>
           </>
         </Router>
+        <Footer />
       </React.Fragment>
     );
   }

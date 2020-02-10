@@ -18,6 +18,7 @@ class Transfer extends Component {
 
   componentDidMount() {
     this.refreshAccount();
+    console.log(this.state.account);
   }
 
   validate = values => {
@@ -35,7 +36,7 @@ class Transfer extends Component {
       //cannot make transfer to the same account
       errors.transaction = "Cannot make transfer to the same account";
     } else if (
-      values.value > this.state.account.balance + 8 &&
+      values.value + 8 > this.state.account.balance &&
       this.state.account.type === "Standard"
     ) {
       errors.value = "Insuficient funds!";
@@ -44,7 +45,7 @@ class Transfer extends Component {
   };
 
   render() {
-    let account = this.state;
+    let account = this.state.account;
     let acc = account.account;
     acc = parseInt(acc);
 

@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import AuthService from "../services/AuthService";
 
+import logo from "../assets/logo.png";
+
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      logged: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.loginClicked = this.loginClicked.bind(this);
@@ -15,10 +18,12 @@ class Login extends Component {
   loginClicked() {
     let user = this.state.username;
     let pass = this.state.password;
-    AuthService.makeLogin(user, pass).then(() => {
-      if (AuthService.isAuthenticated) {
-        localStorage.setItem("account", user);
-        this.props.history.push(`/`);
+    localStorage.setItem("account", user);
+    AuthService.makeLogin(user, pass).then(response => {
+      if (response.status === 200 && response.data.jwt) {
+        let jwt = response.data.jwt;
+        console.log(jwt);
+        localStorage.setItem("token", jwt);
       }
     });
   }
@@ -29,27 +34,43 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Welcome to Mobits Bank!</h1>
-        <h3>Please Login</h3>
-        User Name:{" "}
-        <input
-          type="text"
-          name="username"
-          value={this.state.username}
-          onChange={this.handleChange}
-        />
-        <br></br>
-        Password:{" "}
-        <input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <a href="/" className="btn btn-primary" onClick={this.loginClicked}>
-          Sign In
-        </a>
+      <div id="login" className="text-center">
+        <form className="form-signin">
+          <img src={logo} className="img-fluid" alt="Mobits Bank"></img>
+          <h3 mb-3 font-weight-normal text-secondary>
+            Please sign in
+          </h3>
+          <label htmlFor="username" class="sr-only">
+            Account:
+          </label>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            className="form-control"
+            value={this.state.username}
+            placeholder="Account Number"
+            onChange={this.handleChange}
+            required
+            autoFocus
+          />
+          <label htmlFor="password" class="sr-only">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            className="form-control"
+            value={this.state.password}
+            placeholder="Password"
+            onChange={this.handleChange}
+            required
+          />
+          <a href="/" className="btn btn-primary" onClick={this.loginClicked}>
+            Sign In
+          </a>
+        </form>
       </div>
     );
   }
