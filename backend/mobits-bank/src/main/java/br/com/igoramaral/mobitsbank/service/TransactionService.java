@@ -97,6 +97,11 @@ public class TransactionService {
                                     break;
                             }
                             break;
+                        case "Interest":
+                            newBal = accTo.getBalance() + transaction.getValue();
+                            accountDao.updateBalance(accTo.getAccNumber(), newBal);
+                            transactionDao.insertTransaction(transaction);
+                            break;
                     }
                 }
                 //Transfer transaction have different account Numbers

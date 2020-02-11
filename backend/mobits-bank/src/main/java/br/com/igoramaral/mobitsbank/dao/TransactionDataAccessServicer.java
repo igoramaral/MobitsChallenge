@@ -53,6 +53,9 @@ public class TransactionDataAccessServicer implements TransactionDao{
             case("Transfer Fee"):
                 transId=5;
                 break;
+            case("Interest"):
+                transId=6;
+                break;
         }
         String sql = "INSERT INTO public.transactions (accfrom, accto, transtype, transvalue) VALUES (?,?,?,?)";
         jdbcTemplate.update(sql, from, to, transId, val);
@@ -102,6 +105,8 @@ public class TransactionDataAccessServicer implements TransactionDao{
                     break;
                 case("5"):
                     transDesc = "Transfer Fee";
+                case("6"):
+                    transDesc = "Interest";
             }
             return new Transaction(id, ts, accFrom, accTo, val, transDesc);
         }        
