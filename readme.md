@@ -41,7 +41,14 @@ For this challenge, i decided to take an web approach. The project will be versi
 
 ## Backend
 
-For the backend, I used Spring Boot, a Java framework for creating web applications and api's quickly and reliably. I also used Flyway for migrations management, and PostgreSQL as database server.
+For the backend, I used Spring Boot, a Java framework for creating web applications and api's quickly and reliably. I also used Flyway for migrations management, and PostgreSQL as database server. The authentication was implemented using JWT. There is no insert script to the DB, but i might add them in the future.
+
+## Frontend
+For the frontend, I decided to use React JS and Bootstrap 4 as CSS library, and axios to handle http requests to the backend server. The page designed was implemented trying to make a better design for mobile devices.
+
+
+
+ 
 
 
 
