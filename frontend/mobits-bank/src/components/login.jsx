@@ -37,10 +37,10 @@ class Login extends Component {
       <div id="login" className="text-center">
         <form className="form-signin">
           <img src={logo} className="img-fluid" alt="Mobits Bank"></img>
-          <h3 mb-3 font-weight-normal text-secondary>
+          <h3 className="mb-3 font-weigth-normal text-secondary">
             Please sign in
           </h3>
-          <label htmlFor="username" class="sr-only">
+          <label htmlFor="username" className="sr-only">
             Account:
           </label>
           <input
@@ -54,7 +54,7 @@ class Login extends Component {
             required
             autoFocus
           />
-          <label htmlFor="password" class="sr-only">
+          <label htmlFor="password" className="sr-only">
             Password
           </label>
           <input

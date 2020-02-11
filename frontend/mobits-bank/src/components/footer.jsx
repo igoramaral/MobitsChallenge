@@ -3,8 +3,8 @@ import React, { Component } from "react";
 class Footer extends Component {
   render() {
     return (
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
+      <footer className="mastfoot mt-auto">
+        <div className="inner">
           <p>
             Created by
             <a href="https://github.com/igoramaral/"> Igor Amaral</a> for the
