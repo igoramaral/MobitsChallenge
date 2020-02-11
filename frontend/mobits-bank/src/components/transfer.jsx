@@ -49,8 +49,12 @@ class Transfer extends Component {
     let acc = account.account;
     acc = parseInt(acc);
 
+    const divStyle = {
+      textAlign: "center"
+    };
+
     return (
-      <div className="container">
+      <div className="container" style={divStyle}>
         <div className="row">
           <div className="col-sm">
             <h3>Transfer</h3>

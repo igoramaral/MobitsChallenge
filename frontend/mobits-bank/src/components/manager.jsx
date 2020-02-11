@@ -41,8 +41,13 @@ class ManagerAppointment extends Component {
 
   render() {
     const account = this.state.account;
+
+    const divStyle = {
+      textAlign: "center",
+      height: "400px"
+    };
     return (
-      <div>
+      <div style={divStyle}>
         <h3>Manager Appointment</h3>
         {account.type === "Standard" ? (
           <div className="alert alert-warning">
